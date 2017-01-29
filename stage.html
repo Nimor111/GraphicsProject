@@ -3,6 +3,7 @@
 <html>
     <head>
         <script src="three.min.js"></script>
+        <script src="ThreeCSG.js"></script>
         <script src="human.js"></script>
     </head>
     
@@ -17,7 +18,8 @@
             renderer = new THREE.WebGLRenderer({antialias:true});
             renderer.setSize( window.innerWidth, window.innerHeight );
             renderer.setClearColor(0xffffff, 1);
-            renderer.shadowMapEnable = true;
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             document.body.appendChild( renderer.domElement );
             renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
             
@@ -77,6 +79,7 @@
             var stage = new THREE.Mesh( geometry, material );
             stage.position.y = 0.5;
             stage.rotation.x = 1.5;
+            stage.receiveShadow = true;
             scene.add(stage); 
 
             var chair = new THREE.Object3D();
@@ -110,14 +113,11 @@
             var geometry = new THREE.BoxGeometry(1, 2, 10);
             var topThing = new THREE.Mesh(geometry, material);
             
-            topThing.position.z = 11; // 11
-            topThing.position.y = 6; 
+            topThing.position.z = 13.5; // 11
+            topThing.position.y = 8; 
             topThing.position.x = -50;
             topThing.rotation.y = Math.PI / 2; 
             topThing.rotation.x = Math.PI / 4; 
-            topThing.position.y += 2;
-            topThing.position.z += 1.5;
-            <!-- scene.add(topThing); -->
 
             var chairWithThings = new THREE.Object3D();
             scene.add(chairWithThings);
@@ -162,7 +162,7 @@
             var chairLower = new THREE.Mesh( geometry, material );
             chairLower.position.x = 4.2;
             chairLower.position.y = -4;
-            chairLower.position.z = -3;
+            chairLower.position.z = -4;
             chair.add(chairLower);
 
             chair.rotation.y =  Math.PI / 2;
@@ -171,14 +171,16 @@
             chairWithThings.position.x += 20;
             chairWithThings.position.y += 10;
 
-            chairWithThings.castShadow = true;
-            chairWithThings.receiveShadow = false;
+            chairWithThings.receiveShadow = true;
 
             var spotlight = new THREE.DirectionalLight('red', 1.8);
             spotlight.position.set(6.2, -8, 3);
+            spotlight.castShadow = true;
             scene.add(spotlight);
 
-//  TODO           spotlight.castShadow = true;
+            var secondChair = chairWithThings.clone();
+            secondChair.position.set(90, 8, 18);
+            scene.add(secondChair);
 
             var geometry = new THREE.BoxGeometry(50, 3, 70);
             var material = new THREE.MeshPhongMaterial({
@@ -224,6 +226,45 @@
             handle.rotation.x = Math.PI / 16;
             tableObject.add(handle);
 
+            // хора 
+            манекен2 = мъжествен();
+            манекен2.position.x = 20;
+            манекен2.rotation.y = 3 * Math.PI / 2;
+            манекен2.position.z = 20;
+
+            // обекти върху масата
+            <!-- var geometry = new THREE.CylinderGeometry(2, 5, 5, 100); -->
+            <!-- var material = new THREE.MeshPhongMaterial({color : "yellow"}); -->
+            <!-- var plate = new THREE.Mesh(geometry, material); -->
+            <!-- plate.position.set(-20, 5, 20); -->
+            <!-- plate.rotation.x = Math.PI / 3; -->
+            <!-- plate.rotation.z = Math.PI; -->
+            <!-- scene.add(plate); -->
+
+            var outer = new THREE.CylinderGeometry(2, 4, 3, 100);
+            var inner = new THREE.CylinderGeometry(1.2, 4, 3, 100);
+
+            var bspOuter = new ThreeBSP(outer);
+            var bspInner = new ThreeBSP(inner);
+            var bspResult = bspOuter.subtract(bspInner);
+            
+            var soupPlate = new THREE.Object3D();
+            soupPlate.position.set(-20, 5, 20);
+            scene.add(soupPlate);
+            
+
+            var plate = bspResult.toMesh(new THREE.MeshLambertMaterial({
+                map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+            }));
+            soupPlate.add(plate);
+
+            var bottomOfPlate = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 0.2, 0.2, 100), 
+                    new THREE.MeshLambertMaterial({
+                        map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+                    }));
+            bottomOfPlate.position.y += 1.4;
+            soupPlate.add(bottomOfPlate);
+
             // функция за анимиране на сцената
             var t = 0; // време
             var t1 = -2;
@@ -233,7 +274,9 @@
             function drawFrame()
             {
                 requestAnimationFrame( drawFrame );
+                soupPlate.rotation.x += 0.05;
                 <!-- chairWithThings.rotation.x += 0.05; -->
+                <!-- secondChair.rotation.x += 0.05; -->
                 <!-- cylinder.rotation.x += 0.05; -->
                 <!-- if ( t < t2 && animateMale ) -->
                 <!-- { -->
@@ -258,11 +301,7 @@
             <!-- манекен.position.y = -20; -->
             <!-- манекен.position.x = 20; -->
             <!-- манекен.position.z = -40; -->
-            <!-- манекен2 = мъжествен(); -->
-            <!-- манекен2.position.x = -20; -->
-            <!-- манекен2.rotation.y = 3 * Math.PI / 2; -->
-            <!-- манекен2.position.z = -40; -->
-            <!-- // седнала позиция на жена -->
+                        <!-- // седнала позиция на жена -->
             <!-- манекен.д_крак.врът(0, 0, -90); -->
             <!--     манекен.д_коляно.врът(0,0,75); -->
             <!-- манекен.л_крак.врът(0, 0, -90); -->
