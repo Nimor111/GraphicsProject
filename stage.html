@@ -36,14 +36,16 @@
 
              // обекти за фон на сцената
             var geometry = new THREE.CylinderGeometry(1, 1, 40, 32);
-            var material = new THREE.MeshPhongMaterial({color: 0x0000});
+            var material = new THREE.MeshPhongMaterial({
+                map : new THREE.TextureLoader().load('textures/red_texture.jpeg')
+            });
             var cylinder = new THREE.Mesh(geometry, material);
             cylinder.position.z = 10.5;
             cylinder.position.y = 30.5;
             scene.add(cylinder);
 
             var geometry = new THREE.CylinderGeometry(2, 2, 10, 32);
-            var material = new THREE.MeshPhongMaterial({ color: "grey"} );
+            var material = new THREE.MeshPhongMaterial({ color: "brown"} );
             var cylinderMic = new THREE.Mesh(geometry, material);
             cylinderMic.position.z = 10.5;
             cylinderMic.position.y = 10.5;
@@ -52,7 +54,7 @@
             var start_y = 14.5; 
             for (var i = 0; i < 5; i++) {
                 var geometry = new THREE.TorusGeometry( 1.5, 1, 6, 200 );
-                var material = new THREE.MeshPhongMaterial({ color: "grey" });
+                var material = new THREE.MeshPhongMaterial({ color: "brown" });
                 var torus = new THREE.Mesh( geometry, material );
                 torus.rotation.x = 1.5;
                 torus.position.y = start_y; // 6.5
@@ -179,7 +181,7 @@
             scene.add(spotlight);
 
             var secondChair = chairWithThings.clone();
-            secondChair.position.set(90, 8, 18);
+            secondChair.position.set(70, 8, 18);
             scene.add(secondChair);
 
             var geometry = new THREE.BoxGeometry(50, 3, 70);
@@ -227,20 +229,12 @@
             tableObject.add(handle);
 
             // хора 
-            манекен2 = мъжествен();
-            манекен2.position.x = 20;
-            манекен2.rotation.y = 3 * Math.PI / 2;
-            манекен2.position.z = 20;
+            <!-- манекен2 = мъжествен(); -->
+            <!-- манекен2.position.x = 20; -->
+            <!-- манекен2.rotation.y = 3 * Math.PI / 2; -->
+            <!-- манекен2.position.z = 20; -->
 
             // обекти върху масата
-            <!-- var geometry = new THREE.CylinderGeometry(2, 5, 5, 100); -->
-            <!-- var material = new THREE.MeshPhongMaterial({color : "yellow"}); -->
-            <!-- var plate = new THREE.Mesh(geometry, material); -->
-            <!-- plate.position.set(-20, 5, 20); -->
-            <!-- plate.rotation.x = Math.PI / 3; -->
-            <!-- plate.rotation.z = Math.PI; -->
-            <!-- scene.add(plate); -->
-
             var outer = new THREE.CylinderGeometry(2, 4, 3, 100);
             var inner = new THREE.CylinderGeometry(1.2, 4, 3, 100);
 
@@ -252,7 +246,6 @@
             soupPlate.position.set(-20, 5, 20);
             scene.add(soupPlate);
             
-
             var plate = bspResult.toMesh(new THREE.MeshLambertMaterial({
                 map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
             }));
@@ -264,6 +257,100 @@
                     }));
             bottomOfPlate.position.y += 1.4;
             soupPlate.add(bottomOfPlate);
+            
+            // set position and rotation of soup plate
+            soupPlate.rotation.x = Math.PI * 1.1;
+            soupPlate.position.set(-20, 1.5, 20);
+
+            // generate two more plates
+            soupPlateTwo = soupPlate.clone();
+            soupPlateTwo.position.set(-40, 1.5, 20);
+            soupPlateTwo.rotation.z = Math.PI / 3;
+            scene.add(soupPlateTwo); 
+
+            // make a cup
+            <!-- var geometry = new THREE.SphereGeometry( 5, 16, 12 ); -->
+            <!-- geometry.applyMatrix( new THREE.Matrix4().makeScale( 1.2, 2.7, 0.5 ) ); -->
+            <!-- material = new THREE.MeshPhongMaterial({color : "green"}); -->
+            <!-- var mesh = new THREE.Mesh(geometry, material); -->
+            <!-- mesh.position.z = 20; -->
+            <!-- scene.add(mesh); -->
+            
+            var cup = new THREE.Object3D();
+            scene.add(cup);
+            cup.position.set(-28, 4, 25);
+            cup.rotation.z = Math.PI;
+            cup.rotation.x = Math.PI/1.7;
+            cup.rotation.y = Math.PI/1.2;
+
+            var outer = new THREE.CylinderGeometry(2, 2, 6, 100);
+            var inner = new THREE.CylinderGeometry(1.3, 1.5, 6, 100);
+
+            var bspOuter = new ThreeBSP(outer);
+            var bspInner = new ThreeBSP(inner);
+            var bspResult = bspOuter.subtract(bspInner);
+
+            var cupBase = bspResult.toMesh(new THREE.MeshLambertMaterial({
+                map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+            }));
+            cup.add(cupBase);
+
+            var cupBottom = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 0.2, 0.2, 100), 
+                    new THREE.MeshLambertMaterial({
+                        map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+                    }));
+            cupBottom.position.y += 2.9;
+            cup.add(cupBottom);
+            
+            var material = new THREE.MeshLambertMaterial({
+                        map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+                    });
+            var cupHandle = new THREE.Mesh(new THREE.TorusGeometry(1.7, 0.4, 20, 80, 4), material);
+            cupHandle.position.x -= 2.3;
+            cupHandle.rotation.z = Math.PI/ 3;
+            cup.add(cupHandle);
+
+            cupHandle2 = cupHandle.clone();
+            cup.add(cupHandle2);
+            cupHandle.rotation.z = - Math.PI /1.5 ;
+            cupHandle.position.x += 4.75;
+        
+            cup2 = cup.clone();
+            cup2.position.set(-48, 4, 25);
+            cup2.rotation.z = Math.PI;
+            cup2.rotation.x = Math.PI/7.8;
+            scene.add(cup2);
+            
+            // stairs
+            var stairs = new THREE.Object3D();
+            scene.add(stairs);
+            var origPositionX = 66;
+            var origPositionY = 0;
+            for ( var i = 0; i < 4; i++ ){
+                var geometry = new THREE.BoxGeometry(60, 8, 50);
+                var material = new THREE.MeshPhongMaterial({
+                    map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                });
+                var stairBase = new THREE.Mesh(geometry, material);
+                stairs.rotation.x = Math.PI / 3;
+                stairBase.position.y = origPositionY;
+                stairBase.position.x = origPositionX;
+                stairBase.position.z = 9;
+                origPositionX += 6;
+                origPositionY += 2.5;
+                stairs.add(stairBase);
+            }
+
+            var geometry = new THREE.BoxGeometry(60, 8, 50);
+            var material = new THREE.MeshPhongMaterial({
+                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+            });
+            var stairBase = new THREE.Mesh(geometry, material);
+            <!-- stairBase.rotation.x = Math.PI / 3; -->
+            stairBase.position.z = 9;
+            stairBase.position.y = 10;
+            stairBase.position.x = 90;
+            stairs.add(stairBase);
 
             // функция за анимиране на сцената
             var t = 0; // време
@@ -274,7 +361,9 @@
             function drawFrame()
             {
                 requestAnimationFrame( drawFrame );
-                soupPlate.rotation.x += 0.05;
+                <!-- cup.rotation.y += 0.15; -->
+                <!-- cup2.rotation.x += 0.05; -->
+                <!-- soupPlate.rotation.x += 0.05; -->
                 <!-- chairWithThings.rotation.x += 0.05; -->
                 <!-- secondChair.rotation.x += 0.05; -->
                 <!-- cylinder.rotation.x += 0.05; -->
