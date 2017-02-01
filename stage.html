@@ -364,9 +364,7 @@
             function drawFrame()
             {
                 requestAnimationFrame( drawFrame );
-                console.log("I = ", i);
                 if ( flag ) {
-                  console.log("FLAG IS TRUE");
                   if ( i == 0 ) {flag = false;}
                   else {
                     манекен2.д_ръка.врът(0, 0, -i);
@@ -374,7 +372,6 @@
                     манекен2.д_лакът.врът(i, 0, 0);
                   }
                 } else {
-                  console.log("GOING INTO ELSE");
                     if ( i == 74 )
                     {
                         flag = true;
