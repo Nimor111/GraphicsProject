@@ -282,7 +282,7 @@
             cup.position.set(-28, 4, 25);
             cup.rotation.z = Math.PI;
             cup.rotation.x = Math.PI/1.7;
-            cup.rotation.y = Math.PI/1.2;
+            cup.rotation.y = Math.PI/1.1;
 
             var outer = new THREE.CylinderGeometry(2, 2, 6, 100);
             var inner = new THREE.CylinderGeometry(1.3, 1.5, 6, 100);
@@ -354,13 +354,8 @@
             stairs.add(stairBase);
 
             // функция за анимиране на сцената
-            var t = 0; // време
-            var t1 = -2;
-            var t2 = 120;
-            var t3 = 360; 
-            var t4 = 10800;
-            var i = 74;
-            var flag = true;
+            var i = 81, j = 0, k = 0, t = 0;
+            var flag = true, flagLeg1 = true, flagLeg2 = true, switchLeg = true;
             function drawFrame()
             {
                 requestAnimationFrame( drawFrame );
@@ -368,19 +363,68 @@
                   if ( i == 0 ) {flag = false;}
                   else {
                     манекен2.д_ръка.врът(0, 0, -i);
-                    i-=2;
+                    i-=1.5;
                     манекен2.д_лакът.врът(i, 0, 0);
                   }
                 } else {
-                    if ( i == 74 )
+                    if ( i == 81 )
                     {
                         flag = true;
                     } else {
                         манекен2.д_ръка.врът(0, 0, -i);
-                        i+=2;
+                        i+=1.5;
                         манекен2.д_лакът.врът(i, 0, 0);
                     }    
                 }
+                
+                if ( манекен2.rotation.y >= 3.2 ) {
+                    манекен2.rotation.y += - j / 1000;
+                } 
+                else if ( манекен2.position.x >= 3 ){
+                    манекен2.position.x += - j / 1000;
+                }
+                if ( манекен2.rotation.y < 3.2 && flagLeg1
+                     && манекен2.position.x >= 3)
+                {
+                    if (k >= 35) flagLeg1 = false;
+                    console.log(манекен2.д_крак.rotation.y);
+                    манекен2.д_крак.врът(0, 0, -k);
+                    манекен2.д_коляно.врът(0, 0, k);
+                    k+=2;
+                } else if (!flagLeg1){
+                    if (!switchLeg)
+                    {
+                        if ( манекен2.rotation.y < 3.2 && flagLeg2
+                             && манекен2.position.x >= 3)
+                        {
+                            if (t >= 35) flagLeg2 = false;
+                            console.log(манекен2.д_крак.rotation.y);
+                            манекен2.л_крак.врът(0, 0, -t);
+                            манекен2.л_коляно.врът(0, 0, t);
+                            t+=2;
+                        } else if (!flagLeg2){
+                            if ( t <= -5 )
+                            {
+                                switchLeg = true;
+                                flagLeg1 = true;
+                                flagLeg2 = true;
+                            }
+                            манекен2.л_крак.врът(0, 0, -t);
+                            манекен2.л_коляно.врът(0, 0, t);
+                            t -= 2;
+                        }
+                         
+                } else {
+                    if ( k <= -5 && switchLeg)
+                    {
+                        switchLeg = false;
+                    }
+                    манекен2.д_крак.врът(0, 0, -k);
+                    манекен2.д_коляно.врът(0, 0, k);
+                    k -= 2;
+                }
+              }
+                j += 2;
                 renderer.render( scene, camera );
             }
 
