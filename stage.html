@@ -6,14 +6,14 @@
         <script src="ThreeCSG.js"></script>
         <script src="human.js"></script>
     </head>
-    
+
     <body>
         <h1>"Проект, неставащ"<br><small>ф.н. 81333 &ndash; група 1 &ndash; Георги Божинов</small></h1>
 
         <script>
             // нагласяване на цвета и центрирането на текста с имената ви
             document.getElementsByTagName('h1')[0].style = 'color:white; text-align:left; font-size:1.75em';
-            
+
             // рисувателно поле на цял екран
             renderer = new THREE.WebGLRenderer({antialias:true});
             renderer.setSize( window.innerWidth, window.innerHeight );
@@ -22,7 +22,7 @@
             renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             document.body.appendChild( renderer.domElement );
             renderer.domElement.style = 'width:100%; height:100%; position:fixed; top:0; left:0; z-index:-1;';
-            
+
             // сцена и камера
             scene = new THREE.Scene(background='white');
             camera = new THREE.PerspectiveCamera( 30, window.innerWidth/window.innerHeight, 0.1, 2000 );
@@ -37,12 +37,12 @@
              // обекти за фон на сцената
             var geometry = new THREE.CylinderGeometry(1, 1, 40, 32);
             var material = new THREE.MeshPhongMaterial({
-                map : new THREE.TextureLoader().load('textures/red_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_red_texture.png')
             });
-            var cylinder = new THREE.Mesh(geometry, material);
-            cylinder.position.z = 10.5;
-            cylinder.position.y = 30.5;
-            scene.add(cylinder);
+            var micBase = new THREE.Mesh(geometry, material);
+            micBase.position.z = 10.5;
+            micBase.position.y = 30.5;
+            scene.add(micBase);
 
             var geometry = new THREE.CylinderGeometry(2, 2, 10, 32);
             var material = new THREE.MeshPhongMaterial({ color: "brown"} );
@@ -50,8 +50,8 @@
             cylinderMic.position.z = 10.5;
             cylinderMic.position.y = 10.5;
             scene.add(cylinderMic);
-            
-            var start_y = 14.5; 
+
+            var start_y = 14.5;
             for (var i = 0; i < 5; i++) {
                 var geometry = new THREE.TorusGeometry( 1.5, 1, 6, 200 );
                 var material = new THREE.MeshPhongMaterial({ color: "brown" });
@@ -62,17 +62,17 @@
                 scene.add( torus );
                 start_y -= 2;
             }
-            
+
             // текстурата на завесата
             var geometry = new THREE.BoxGeometry(190, 5, 80);
             var material = new THREE.MeshPhongMaterial( {
-                map : new THREE.TextureLoader().load('textures/red_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_red_texture.png')
             });
             var curtain = new THREE.Mesh( geometry, material );
             curtain.position.y = 50.5;
             curtain.rotation.x = 1.5;
-            scene.add(curtain); 
-            
+            scene.add(curtain);
+
             // сцената
             var geometry = new THREE.BoxGeometry(190, 5, 80);
             var material = new THREE.MeshPhongMaterial( {
@@ -82,24 +82,24 @@
             stage.position.y = 0.5;
             stage.rotation.x = 1.5;
             stage.receiveShadow = true;
-            scene.add(stage); 
+            scene.add(stage);
 
             var chair = new THREE.Object3D();
             scene.add(chair);
             var geometry = new THREE.BoxGeometry(10, 2, 10);
             var material = new THREE.MeshPhongMaterial( {
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             } );
             var chairBase = new THREE.Mesh ( geometry, material );
             chair.position.z = 10;
             chair.position.x = -50;
             chair.add(chairBase);
-            
-            var chairZ = -4; 
+
+            var chairZ = -4;
             for (var i = 0; i < 3; i++) {
                 var geometry = new THREE.CylinderGeometry(0.8, 0.8, 8, 32);
                 var material = new THREE.MeshPhongMaterial({
-                    map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                    map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
                 });
                 var chairUpper = new THREE.Mesh( geometry, material );
                 chairUpper.position.x = 4.2;
@@ -108,18 +108,18 @@
                 chair.add(chairUpper);
                 chairZ += 4;
             }
-            
+
             var material = new THREE.MeshPhongMaterial( {
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             } );
             var geometry = new THREE.BoxGeometry(1, 2, 10);
             var topThing = new THREE.Mesh(geometry, material);
-            
+
             topThing.position.z = 13.5; // 11
-            topThing.position.y = 8; 
+            topThing.position.y = 8;
             topThing.position.x = -50;
-            topThing.rotation.y = Math.PI / 2; 
-            topThing.rotation.x = Math.PI / 4; 
+            topThing.rotation.y = Math.PI / 2;
+            topThing.rotation.x = Math.PI / 4;
 
             var chairWithThings = new THREE.Object3D();
             scene.add(chairWithThings);
@@ -129,7 +129,7 @@
 
             var geometry = new THREE.CylinderGeometry(0.8, 0.8, 8, 32);
             var material = new THREE.MeshPhongMaterial({
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             });
             var chairLower = new THREE.Mesh( geometry, material );
             chairLower.position.x = -4.2;
@@ -139,7 +139,7 @@
 
             var geometry = new THREE.CylinderGeometry(0.8, 0.8, 8, 32);
             var material = new THREE.MeshPhongMaterial({
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             });
             var chairLower = new THREE.Mesh( geometry, material );
             chairLower.position.x = -4.2;
@@ -149,7 +149,7 @@
 
             var geometry = new THREE.CylinderGeometry(0.8, 0.8, 8, 32);
             var material = new THREE.MeshPhongMaterial({
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             });
             var chairLower = new THREE.Mesh( geometry, material );
             chairLower.position.x = 4.2;
@@ -159,7 +159,7 @@
 
             var geometry = new THREE.CylinderGeometry(0.8, 0.8, 8, 32);
             var material = new THREE.MeshPhongMaterial({
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             });
             var chairLower = new THREE.Mesh( geometry, material );
             chairLower.position.x = 4.2;
@@ -182,15 +182,15 @@
             scene.add(spotlight);
 
             var secondChair = chairWithThings.clone();
-            secondChair.position.set(70, 8, 13);
+            secondChair.position.set(60, 8, 11);
             scene.add(secondChair);
 
             var geometry = new THREE.BoxGeometry(50, 3, 70);
             var material = new THREE.MeshPhongMaterial({
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             });
             var table = new THREE.Mesh(geometry, material);
- 
+
             table.rotation.x = Math.PI / 8;
             table.position.x = -35;
             table.position.y = 5;
@@ -200,7 +200,7 @@
             tableObject.add(table);
 
             var material = new THREE.MeshPhongMaterial( {
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             } );
             var handle = new THREE.Mesh(new THREE.CylinderGeometry( 1.5, 1.5, 30, 100 ), material);
             handle.position.z = 25;
@@ -210,7 +210,7 @@
             tableObject.add(handle);
 
             var material = new THREE.MeshPhongMaterial( {
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             } );
             var handle = new THREE.Mesh(new THREE.CylinderGeometry( 1.5, 1.5, 30, 100 ), material);
             handle.position.z = 25;
@@ -220,7 +220,7 @@
             tableObject.add(handle);
 
             var material = new THREE.MeshPhongMaterial( {
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             } );
             var handle = new THREE.Mesh(new THREE.CylinderGeometry( 1.5, 1.5, 15, 100 ), material);
             handle.position.z = 6;
@@ -229,12 +229,6 @@
             handle.rotation.x = Math.PI / 16;
             tableObject.add(handle);
 
-            // хора 
-            манекен2 = мъжествен();
-            манекен2.position.x = 30;
-            манекен2.rotation.y = 3 * Math.PI / 2;
-            манекен2.position.z = 50;
-
             // обекти върху масата
             var outer = new THREE.CylinderGeometry(2, 4, 3, 100);
             var inner = new THREE.CylinderGeometry(1.2, 4, 3, 100);
@@ -242,23 +236,23 @@
             var bspOuter = new ThreeBSP(outer);
             var bspInner = new ThreeBSP(inner);
             var bspResult = bspOuter.subtract(bspInner);
-            
+
             var soupPlate = new THREE.Object3D();
             soupPlate.position.set(-20, 5, 20);
             scene.add(soupPlate);
-            
+
             var plate = bspResult.toMesh(new THREE.MeshLambertMaterial({
-                map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_porcelain_texture.png')
             }));
             soupPlate.add(plate);
 
-            var bottomOfPlate = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 0.2, 0.2, 100), 
+            var bottomOfPlate = new THREE.Mesh(new THREE.CylinderGeometry(1.2, 0.2, 0.2, 100),
                     new THREE.MeshLambertMaterial({
-                        map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+                        map : new THREE.TextureLoader().load('textures/rsz_porcelain_texture.png')
                     }));
             bottomOfPlate.position.y += 1.4;
             soupPlate.add(bottomOfPlate);
-            
+
             // set position and rotation of soup plate
             soupPlate.rotation.x = Math.PI * 1.1;
             soupPlate.position.set(-20, 1.5, 20);
@@ -267,7 +261,7 @@
             soupPlateTwo = soupPlate.clone();
             soupPlateTwo.position.set(-40, 1.5, 20);
             soupPlateTwo.rotation.z = Math.PI / 3;
-            scene.add(soupPlateTwo); 
+            scene.add(soupPlateTwo);
 
             // make a cup
             <!-- var geometry = new THREE.SphereGeometry( 5, 16, 12 ); -->
@@ -276,7 +270,7 @@
             <!-- var mesh = new THREE.Mesh(geometry, material); -->
             <!-- mesh.position.z = 20; -->
             <!-- scene.add(mesh); -->
-            
+
             var cup = new THREE.Object3D();
             scene.add(cup);
             cup.position.set(-28, 4, 25);
@@ -292,19 +286,19 @@
             var bspResult = bspOuter.subtract(bspInner);
 
             var cupBase = bspResult.toMesh(new THREE.MeshLambertMaterial({
-                map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_porcelain_texture.png')
             }));
             cup.add(cupBase);
 
-            var cupBottom = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 0.2, 0.2, 100), 
+            var cupBottom = new THREE.Mesh(new THREE.CylinderGeometry(1.3, 0.2, 0.2, 100),
                     new THREE.MeshLambertMaterial({
-                        map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+                        map : new THREE.TextureLoader().load('textures/rsz_porcelain_texture.png')
                     }));
             cupBottom.position.y += 2.9;
             cup.add(cupBottom);
-            
+
             var material = new THREE.MeshLambertMaterial({
-                        map : new THREE.TextureLoader().load('textures/porcelain_texture.jpeg')
+                        map : new THREE.TextureLoader().load('textures/rsz_porcelain_texture.png')
                     });
             var cupHandle = new THREE.Mesh(new THREE.TorusGeometry(1.7, 0.4, 20, 80, 4), material);
             cupHandle.position.x -= 2.3;
@@ -315,13 +309,13 @@
             cup.add(cupHandle2);
             cupHandle.rotation.z = - Math.PI /1.5 ;
             cupHandle.position.x += 4.75;
-        
+
             cup2 = cup.clone();
             cup2.position.set(-48, 4, 25);
             cup2.rotation.z = Math.PI;
             cup2.rotation.x = Math.PI/7.8;
             scene.add(cup2);
-            
+
             // stairs
             var stairs = new THREE.Object3D();
             scene.add(stairs);
@@ -330,7 +324,7 @@
             for ( var i = 0; i < 4; i++ ){
                 var geometry = new THREE.BoxGeometry(60, 8, 50);
                 var material = new THREE.MeshPhongMaterial({
-                    map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                    map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
                 });
                 var stairBase = new THREE.Mesh(geometry, material);
                 stairs.rotation.x = Math.PI / 3;
@@ -344,104 +338,180 @@
 
             var geometry = new THREE.BoxGeometry(60, 8, 50);
             var material = new THREE.MeshPhongMaterial({
-                map : new THREE.TextureLoader().load('textures/table_texture.jpeg')
+                map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             });
             var stairBase = new THREE.Mesh(geometry, material);
-            <!-- stairBase.rotation.x = Math.PI / 3; -->
             stairBase.position.z = 9;
             stairBase.position.y = 10;
             stairBase.position.x = 90;
             stairs.add(stairBase);
 
             var thirdChair = chairWithThings.clone();
-            thirdChair.scale.set = (0.5, 0.5, 0.5);
-            thirdChair.position.set(55, -20, 50);
+            thirdChair.scale.multiplyScalar(1.5);
+            thirdChair.position.set(78, -32, 50);
             thirdChair.rotation.y = - Math.PI/8;
             thirdChair.rotation.z = - Math.PI / 8;
             scene.add(thirdChair);
 
+            // хора
+            манекен = мъжествен();
+            манекен.position.x = 40;
+            манекен.position.y = -10;
+            манекен.rotation.y = Math.PI;
+            манекен.position.z = 18;
+
+            манекен.таз.position.x -= 3;
+            манекен.д_крак.врът(0, 0, -90);
+            манекен.л_крак.врът(0, 0, -90);
+            манекен.д_коляно.врът(0, 0, 90);
+            манекен.л_коляно.врът(0, 0, 90);
+            манекен.л_лакът.врът(0, 0, -55);
+            манекен.д_лакът.врът(0, 0, -55);
+
+            манекен2 = мъжествен();
+            манекен2.position.x = 65;
+            манекен2.rotation.y = 3 * Math.PI / 2;
+            манекен2.position.z = 40;
+
             // функция за анимиране на сцената
-            var i = 81, j = 0, k = 0, t = 0;
-            var flag = true, flagLeg1 = true, flagLeg2 = true, switchLeg = true;
+            var i = 81, j = 0, k = 0, t = 0, sit = 0, time_ = 0;
+            var flagLeg1 = true, flagLeg2 = true, switchLeg = true, sitFlag = false;
             function drawFrame()
             {
                 requestAnimationFrame( drawFrame );
-                if ( flag ) {
-                  if ( i == 0 ) {flag = false;}
-                  else {
-                    манекен2.д_ръка.врът(0, 0, -i);
-                    i-=1.5;
-                    манекен2.д_лакът.врът(i, 0, 0);
-                  }
-                } else {
-                    if ( i == 81 )
-                    {
-                        flag = true;
-                    } else {
-                        манекен2.д_ръка.врът(0, 0, -i);
-                        i+=1.5;
-                        манекен2.д_лакът.врът(i, 0, 0);
-                    }    
-                }
-                
-                if ( манекен2.rotation.y >= 3.2 ) {
-                    манекен2.rotation.y += - j / 1000;
-                } 
-                else if ( манекен2.position.x >= 3 ){
-                    манекен2.position.x += - j / 900;
-                }
-                if ( манекен2.rotation.y < 3.2 && flagLeg1
-                     && манекен2.position.x >= 3)
-                {
-                    if (k >= 35) flagLeg1 = false;
-                    console.log(манекен2.д_крак.rotation.y);
-                    манекен2.д_крак.врът(0, 0, -k);
-                    манекен2.д_коляно.врът(0, 0, k);
-                    k+=2;
-                } else if (!flagLeg1){
-                    if (!switchLeg)
-                    {
-                        if ( манекен2.rotation.y < 3.2 && flagLeg2
-                             && манекен2.position.x >= 3)
-                        {
-                            if (t >= 35) flagLeg2 = false;
-                            console.log(манекен2.д_крак.rotation.y);
-                            манекен2.л_крак.врът(0, 0, -t);
-                            манекен2.л_коляно.врът(0, 0, t);
-                            t+=2;
-                        } else if (!flagLeg2){
-                            if ( t <= -5 )
-                            {
-                                switchLeg = true;
-                                flagLeg1 = true;
-                                flagLeg2 = true;
-                            }
-                            манекен2.л_крак.врът(0, 0, -t);
-                            манекен2.л_коляно.врът(0, 0, t);
-                            t -= 2;
-                        }
-                         
-                } else {
-                    if ( k <= -5 && switchLeg)
-                    {
-                        switchLeg = false;
-                    }
-                    манекен2.д_крак.врът(0, 0, -k);
-                    манекен2.д_коляно.врът(0, 0, k);
-                    k -= 2;
-                }
-              }
-                j += 2;
+                animateFirst();
+                animateSecond();
                 renderer.render( scene, camera );
             }
 
-            // човече
-            <!-- манекен = женствен(); -->
-            <!-- манекен.rotation.y = 3 * Math.PI / 2; -->
-            <!-- манекен.position.y = -20; -->
-            <!-- манекен.position.x = 20; -->
-            <!-- манекен.position.z = -40; -->
-            <!-- // седнала позиция на жена -->
+            // взето от шаблона за второ домашно
+            animateHead = function (t)
+            {
+                манекен2.врат.врът(0,0,10*sin(5*t)-5);
+                манекен2.глава.врът(0,0,10*sin(5*t)-5);
+            }
+
+            var counter = 45, headCounter = 0;
+            var headFlag = false, handsFlag = false;
+            animateFirst = function()
+            {
+                if (!headFlag)
+                {
+                    if (headCounter > 40) headFlag = true;
+                    манекен.глава.врът(0, 0, -headCounter);
+                    манекен.врат.врът(0, 0, -headCounter);
+                    манекен.д_китка.врът(0, 0, -headCounter);
+                    манекен.л_китка.врът(0, 0, -headCounter);
+                    headCounter+=1;
+                } else
+                {
+                    if (headCounter < 10) headFlag = false;
+                    манекен.глава.врът(0, 0, -headCounter);
+                    манекен.врат.врът(0, 0, -headCounter);
+                    манекен.д_китка.врът(0, 0, -headCounter);
+                    манекен.л_китка.врът(0, 0, -headCounter);
+                    headCounter-=1;
+                }
+                if (!handsFlag) {
+                    if (counter > 150) handsFlag = true;
+                    манекен.д_лакът.врът(0, 0, -counter);
+                    манекен.л_лакът.врът(0, 0, -counter);
+                    counter+=3;
+                } else
+                {
+                    if (counter < 45) handsFlag = false;
+                    манекен.д_лакът.врът(0, 0, -counter);
+                    манекен.л_лакът.врът(0, 0, -counter);
+                    counter-=3;
+                }
+            }
+
+            animateSecond = function ()
+            {
+                if ( манекен2.rotation.y >= 3.2 && !sitFlag) {
+                        манекен2.rotation.y += - j / 1100;
+                    }
+                    else if ( манекен2.position.x >= 2.8 ){
+                        sitFlag = true;
+                        манекен2.position.x += - j / 1000;
+                    }
+                    if ( манекен2.rotation.y < 3.2 && flagLeg1
+                         && манекен2.position.x >= 2.8)
+                    {
+                        if (k >= 35) flagLeg1 = false;
+                        console.log(манекен2.д_крак.rotation.y);
+                        манекен2.д_крак.врът(0, 0, -k);
+                        манекен2.д_коляно.врът(0, 0, k);
+                        k+=2;
+                    } else if (!flagLeg1){
+                        if (!switchLeg)
+                        {
+                            if ( манекен2.rotation.y < 3.2 && flagLeg2
+                                 && манекен2.position.x >= 2.8)
+                            {
+                                if (t >= 35) flagLeg2 = false;
+                                console.log(манекен2.д_крак.rotation.y);
+                                манекен2.л_крак.врът(0, 0, -t);
+                                манекен2.л_коляно.врът(0, 0, t);
+                                t+=2;
+                            } else if (!flagLeg2){
+                                if ( t <= -5 )
+                                {
+                                    switchLeg = true;
+                                    flagLeg1 = true;
+                                    flagLeg2 = true;
+                                }
+                                манекен2.л_крак.врът(0, 0, -t);
+                                манекен2.л_коляно.врът(0, 0, t);
+                                t -= 2;
+                            }
+
+                    } else {
+                        if ( k <= -5 && switchLeg)
+                        {
+                            switchLeg = false;
+                        }
+                        манекен2.д_крак.врът(0, 0, -k);
+                        манекен2.д_коляно.врът(0, 0, k);
+                        k -= 2;
+                    }
+                  }
+                    if (манекен2.position.x < 2.8)
+                    {
+                        if (sitFlag && манекен2.rotation.y <= 3.8)
+                            манекен2.rotation.y += j / 5000;
+                    }
+                    if (sitFlag && манекен2.rotation.y > 3.8)
+                    {
+                      if ( манекен2.таз.position.y >= -11 && sit <= 60)
+                      {
+                        манекен2.л_ръка.врът(0, 0, sit / 4 );
+                        манекен2.л_лакът.врът(0, 0, -sit / 2);
+                        манекен2.д_ръка.врът(0, 0, -sit / 2);
+                        манекен2.д_лакът.врът(0, 0, -sit / 2);
+                        манекен2.таз.position.z -= j/3000;
+                        манекен2.таз.position.y -= j/2000;
+                        манекен2.д_коляно.врът(0, 0, sit);
+                        манекен2.д_крак.врът(0, 0, -sit);
+                        манекен2.л_коляно.врът(0, 0, sit);
+                        манекен2.л_крак.врът(0, 0, -sit);
+                        sit += 2;
+                      }
+                    }
+
+                    if (sit > 60)
+                    {
+                      if (манекен2.глава.rotation.y > -0.8) {
+                            манекен2.глава.rotation.y -= j / 10000;
+                      }
+                    }
+                    if (манекен2.глава.rotation.y <= -0.8)
+                    {
+                        if ( animateHead ) animate(time_++);
+                    }
+                    j += 2;
+                }
+
             drawFrame();
         </script>
     </body>

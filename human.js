@@ -10,15 +10,15 @@ function cos(x) {return Math.cos(rad(x));}
 // цветове и вградени текстури за глава и крайници
 var feminine = true; //женствена фигура
 // var colors = ['lightskyblue','royalblue','lightskyblue','royalblue','lightskyblue','lightskyblue']; // [глава,обувка,таз,сферички,крайник,торс,]
-var colors = ['white','white','white','white','white','white']; // [глава,обувка,таз,сферички,крайник,торс,]
+var colors = ['beige','brown','brown','brown','brown','brown']; // [глава,обувка,таз,сферички,крайник,торс,]
 // var colors = ['black','black','black','black','black','black']; // [глава,обувка,таз,сферички,крайник,торс,]
 var femColors =  ['lightpink','fuchsia','lightpink','fuchsia','lightpink','lightpink']; // Добавяме цветове и за женски манекен, същия ред на елементи на тялото
 // като тези за мъжкия
 var headScale = 1.0;
 var texHead = new THREE.TextureLoader().load("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAGFBMVEX////Ly8v5+fne3t5GRkby8vK4uLi/v7/GbmKXAAAAZklEQVRIx2MYQUAQHQgQVkBtwEjICkbK3MAkQFABpj+R5ZkJKTAxImCFSSkhBamYVgiQrAADEHQkIW+iqiBCAfXjAkMHpgKqgyHgBiwBRfu4ECScYEZGvkD1JxEKhkA5OVTqi8EOAOyFJCGMDsu4AAAAAElFTkSuQmCC");
 // var texLimb = new THREE.TextureLoader().load("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAQMAAACQp+OdAAAABlBMVEX////Ly8vsgL9iAAAAHElEQVQoz2OgEPyHAjgDjxoKGWTaRRkYDR/8AAAU9d8hJ6+ZxgAAAABJRU5ErkJggg==");
-var texLimb = new THREE.TextureLoader().load('textures/black_texture.jpeg');
-var shirt = new THREE.TextureLoader().load('textures/white_texture.jpg');
+var texLimb = new THREE.TextureLoader().load('textures/rsz_brown_cloth_texture.png');
+var shirt = new THREE.TextureLoader().load('textures/rsz_beige_texture.png');
 
 // изчислява на издутина
 function cossers(u,v,params)
@@ -135,7 +135,7 @@ function addSphere(image,r,y)
 	i.position.set(0,y,0);
 	image.add(i);
 }
-	
+
 // форма на крайник като параметрична повърхнина
 function формаКрайник(params)
 {
@@ -155,7 +155,7 @@ function формаКрайник(params)
 	image.children[0].position.set(0,-y/2,0);
 
 	addSphere(image,rad?rad:z/2,-y/2);
-	
+
 	return image;
 }
 
@@ -191,7 +191,7 @@ function става(parent,pos,rot,params,shape,centered)
 {
 	var y = params[1];
 	var joint = new THREE.Object3D();
-	
+
 	var image = shape?shape(params):new THREE.Object3D();
 	if (!centered) image.position.set(0,y/2,0);
 
@@ -199,30 +199,30 @@ function става(parent,pos,rot,params,shape,centered)
 	userJoint.add(image);
 	joint.add(userJoint);
 	joint.y=y;
-	
+
 	if (parent)
 	{	// закачане на ставата към родителската става
 		joint.position.set(0,parent.y,0);
 		parent.children[0].add(joint);
 	}
-	
+
 	joint.врът = function(x,y,z)
 	{	// "публичен" метод за въртене на става
 		this.children[0].rotation.set(rad(x),rad(y),rad(z));
 	}
-	
+
 	if (rot)
 	{	// първоначално завъртане на ставата
 		joint.rotateX(rad(rot[0]));
 		joint.rotateZ(rad(rot[2]));
 		joint.rotateY(rad(rot[1]));
 	}
-	
+
 	if (pos)
 	{	// първоначално разположение на ставата
 		joint.position.set(pos[0],pos[1],pos[2]);
 	}
-	
+
 	return joint;
 }
 
@@ -230,7 +230,7 @@ function става(parent,pos,rot,params,shape,centered)
 function човек()
 {
 	var obj = става(null,null,null,[1,1,1],null,true);
-	
+
 	obj.таз = става(obj,null,[0,0,-20],[3,4,feminine?5.5:5],формаТаз,true);
 		obj.тяло = става(obj.таз,[-2,4,0],[0,0,20],[5,17,10,feminine?10:80,feminine?520:380,feminine?0.8:0.9,feminine?0.25:0.2],формаТорс);
 		obj.врат = става(obj.тяло,[0,15,0],[0,0,10],[2,feminine?5:4,2,45,60,1,0.2,0],формаКрайник);
@@ -253,5 +253,5 @@ function човек()
 }
 
 // дефиниции на човечета с леко мъжествени или женствени черти
-function мъжествен() {feminine=false; return човек();} 
-function женствен() {feminine=true; return човек();} 
+function мъжествен() {feminine=false; return човек();}
+function женствен() {feminine=true; return човек();}
