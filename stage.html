@@ -233,7 +233,7 @@
             манекен2 = мъжествен();
             манекен2.position.x = 30;
             манекен2.rotation.y = 3 * Math.PI / 2;
-            манекен2.position.z = 40;
+            манекен2.position.z = 50;
 
             // обекти върху масата
             var outer = new THREE.CylinderGeometry(2, 4, 3, 100);
@@ -353,6 +353,13 @@
             stairBase.position.x = 90;
             stairs.add(stairBase);
 
+            var thirdChair = chairWithThings.clone();
+            thirdChair.scale.set = (0.5, 0.5, 0.5);
+            thirdChair.position.set(55, -20, 50);
+            thirdChair.rotation.y = - Math.PI/8;
+            thirdChair.rotation.z = - Math.PI / 8;
+            scene.add(thirdChair);
+
             // функция за анимиране на сцената
             var i = 81, j = 0, k = 0, t = 0;
             var flag = true, flagLeg1 = true, flagLeg2 = true, switchLeg = true;
@@ -381,7 +388,7 @@
                     манекен2.rotation.y += - j / 1000;
                 } 
                 else if ( манекен2.position.x >= 3 ){
-                    манекен2.position.x += - j / 1000;
+                    манекен2.position.x += - j / 900;
                 }
                 if ( манекен2.rotation.y < 3.2 && flagLeg1
                      && манекен2.position.x >= 3)
