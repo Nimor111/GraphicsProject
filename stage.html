@@ -8,7 +8,7 @@
     </head>
 
     <body>
-        <h1>"Проект, неставащ"<br><small>ф.н. 81333 &ndash; група 1 &ndash; Георги Божинов</small></h1>
+        <h1>"Излизане на сцена"<br><small>ф.н. 81333 &ndash; група 1 &ndash; Георги Божинов</small></h1>
 
         <script>
             // нагласяване на цвета и центрирането на текста с имената ви
@@ -413,7 +413,7 @@
                     headCounter-=1;
                 }
                 if (!handsFlag) {
-                    if (counter > 150) handsFlag = true;
+                    if (counter > 140) handsFlag = true;
                     манекен.д_лакът.врът(0, 0, -counter);
                     манекен.л_лакът.врът(0, 0, -counter);
                     counter+=3;
@@ -507,7 +507,7 @@
                     }
                     if (манекен2.глава.rotation.y <= -0.8)
                     {
-                        if ( animateHead ) animate(time_++);
+                        if ( animateHead ) animateHead(time_++);
                     }
                     j += 2;
                 }
