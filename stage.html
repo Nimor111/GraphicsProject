@@ -8,13 +8,8 @@
     </head>
 
     <body>
-        <h1>"Излизане на сцена"<br><small>ф.н. 81333 &ndash; група 1 &ndash; Георги Божинов</small></h1>
-
         <script>
-            // нагласяване на цвета и центрирането на текста с имената ви
-            document.getElementsByTagName('h1')[0].style = 'color:white; text-align:left; font-size:1.75em';
-
-            // рисувателно поле на цял екран
+            // рисувателно поле на цял екран - взето от Mannequin
             renderer = new THREE.WebGLRenderer({antialias:true});
             renderer.setSize( window.innerWidth, window.innerHeight );
             renderer.setClearColor(0xffffff, 1);
@@ -33,8 +28,10 @@
             light.position.set(0,1,4);
             scene.add(light);
             scene.add( new THREE.AmbientLight('white',0.4) );
+            // Взето от Mannequin
 
-             // обекти за фон на сцената
+            // обекти за фон на сцената
+            // Микрофон, висящ от тавана
             var geometry = new THREE.CylinderGeometry(1, 1, 40, 32);
             var material = new THREE.MeshPhongMaterial({
                 map : new THREE.TextureLoader().load('textures/rsz_red_texture.png')
@@ -44,6 +41,7 @@
             micBase.position.y = 30.5;
             scene.add(micBase);
 
+            // долната Част на микрофона
             var geometry = new THREE.CylinderGeometry(2, 2, 10, 32);
             var material = new THREE.MeshPhongMaterial({ color: "brown"} );
             var cylinderMic = new THREE.Mesh(geometry, material);
@@ -51,6 +49,7 @@
             cylinderMic.position.y = 10.5;
             scene.add(cylinderMic);
 
+            // торове имитират базата на микрофона
             var start_y = 14.5;
             for (var i = 0; i < 5; i++) {
                 var geometry = new THREE.TorusGeometry( 1.5, 1, 6, 200 );
@@ -63,7 +62,8 @@
                 start_y -= 2;
             }
 
-            // текстурата на завесата
+            // текстурата на завесата - resize-ната защото threejs явно
+            // иска размерът да е степен на двойката
             var geometry = new THREE.BoxGeometry(190, 5, 80);
             var material = new THREE.MeshPhongMaterial( {
                 map : new THREE.TextureLoader().load('textures/rsz_red_texture.png')
@@ -84,6 +84,7 @@
             stage.receiveShadow = true;
             scene.add(stage);
 
+            // ляв стол, отново с resized texture
             var chair = new THREE.Object3D();
             scene.add(chair);
             var geometry = new THREE.BoxGeometry(10, 2, 10);
@@ -95,6 +96,7 @@
             chair.position.x = -50;
             chair.add(chairBase);
 
+            // "облегалката" на стола
             var chairZ = -4;
             for (var i = 0; i < 3; i++) {
                 var geometry = new THREE.CylinderGeometry(0.8, 0.8, 8, 32);
@@ -109,6 +111,7 @@
                 chairZ += 4;
             }
 
+            // горната рамка на стола
             var material = new THREE.MeshPhongMaterial( {
                 map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             } );
@@ -121,12 +124,14 @@
             topThing.rotation.y = Math.PI / 2;
             topThing.rotation.x = Math.PI / 4;
 
+            // целия стол, крайно оригинално име
             var chairWithThings = new THREE.Object3D();
             scene.add(chairWithThings);
             chairWithThings.add(chair);
             chairWithThings.add(topThing);
             chairWithThings.position.z = 10;
 
+            // краката на стола
             var geometry = new THREE.CylinderGeometry(0.8, 0.8, 8, 32);
             var material = new THREE.MeshPhongMaterial({
                 map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
@@ -166,6 +171,7 @@
             chairLower.position.y = -4;
             chairLower.position.z = -4;
             chair.add(chairLower);
+            // краката на стола
 
             chair.rotation.y =  Math.PI / 2;
             chair.rotation.x = Math.PI / 4;
@@ -175,16 +181,20 @@
             chairWithThings.position.z -= 5;
 
             chairWithThings.receiveShadow = true;
+            // край на стола
 
+            // Червена светлина да придаде атмосфера
             var spotlight = new THREE.DirectionalLight('red', 1.8);
             spotlight.position.set(6.2, -8, 3);
             spotlight.castShadow = true;
             scene.add(spotlight);
 
+            // втори стол, копие на първия
             var secondChair = chairWithThings.clone();
             secondChair.position.set(60, 8, 11);
             scene.add(secondChair);
 
+            // да преминем към масата
             var geometry = new THREE.BoxGeometry(50, 3, 70);
             var material = new THREE.MeshPhongMaterial({
                 map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
@@ -199,37 +209,40 @@
             scene.add(tableObject);
             tableObject.add(table);
 
+            // крака на масата
             var material = new THREE.MeshPhongMaterial( {
                 map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             } );
-            var handle = new THREE.Mesh(new THREE.CylinderGeometry( 1.5, 1.5, 30, 100 ), material);
-            handle.position.z = 25;
-            handle.position.x = -59;
-            handle.position.y = -22;
-            handle.rotation.x = Math.PI / 8;
-            tableObject.add(handle);
+            var leg = new THREE.Mesh(new THREE.CylinderGeometry( 1.5, 1.5, 30, 100 ), material);
+            leg.position.z = 25;
+            leg.position.x = -59;
+            leg.position.y = -22;
+            leg.rotation.x = Math.PI / 8;
+            tableObject.add(leg);
 
             var material = new THREE.MeshPhongMaterial( {
                 map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             } );
-            var handle = new THREE.Mesh(new THREE.CylinderGeometry( 1.5, 1.5, 30, 100 ), material);
-            handle.position.z = 25;
-            handle.position.x = -12;
-            handle.position.y = -22;
-            handle.rotation.x = Math.PI / 8;
-            tableObject.add(handle);
+            var leg = new THREE.Mesh(new THREE.CylinderGeometry( 1.5, 1.5, 30, 100 ), material);
+            leg.position.z = 25;
+            leg.position.x = -12;
+            leg.position.y = -22;
+            leg.rotation.x = Math.PI / 8;
+            tableObject.add(leg);
 
             var material = new THREE.MeshPhongMaterial( {
                 map : new THREE.TextureLoader().load('textures/rsz_1table_texture.png')
             } );
-            var handle = new THREE.Mesh(new THREE.CylinderGeometry( 1.5, 1.5, 15, 100 ), material);
-            handle.position.z = 6;
-            handle.position.x = -12;
-            handle.position.y = -10;
-            handle.rotation.x = Math.PI / 16;
-            tableObject.add(handle);
+            var leg = new THREE.Mesh(new THREE.CylinderGeometry( 1.5, 1.5, 15, 100 ), material);
+            leg.position.z = 6;
+            leg.position.x = -12;
+            leg.position.y = -10;
+            leg.rotation.x = Math.PI / 16;
+            tableObject.add(leg);
+            // крака на масата
 
             // обекти върху масата
+            // Чиния - constructive geometry
             var outer = new THREE.CylinderGeometry(2, 4, 3, 100);
             var inner = new THREE.CylinderGeometry(1.2, 4, 3, 100);
 
@@ -253,24 +266,17 @@
             bottomOfPlate.position.y += 1.4;
             soupPlate.add(bottomOfPlate);
 
-            // set position and rotation of soup plate
+            // позиция и ротация на Чинията
             soupPlate.rotation.x = Math.PI * 1.1;
             soupPlate.position.set(-20, 1.5, 20);
 
-            // generate two more plates
+            // oще една Чиния, все пак са две ЧовеЧета
             soupPlateTwo = soupPlate.clone();
             soupPlateTwo.position.set(-40, 1.5, 20);
             soupPlateTwo.rotation.z = Math.PI / 3;
             scene.add(soupPlateTwo);
 
-            // make a cup
-            <!-- var geometry = new THREE.SphereGeometry( 5, 16, 12 ); -->
-            <!-- geometry.applyMatrix( new THREE.Matrix4().makeScale( 1.2, 2.7, 0.5 ) ); -->
-            <!-- material = new THREE.MeshPhongMaterial({color : "green"}); -->
-            <!-- var mesh = new THREE.Mesh(geometry, material); -->
-            <!-- mesh.position.z = 20; -->
-            <!-- scene.add(mesh); -->
-
+            // Чаша, отново CSG
             var cup = new THREE.Object3D();
             scene.add(cup);
             cup.position.set(-28, 4, 25);
@@ -310,13 +316,14 @@
             cupHandle.rotation.z = - Math.PI /1.5 ;
             cupHandle.position.x += 4.75;
 
+            // втора Чаша, същата логика
             cup2 = cup.clone();
             cup2.position.set(-48, 4, 25);
             cup2.rotation.z = Math.PI;
             cup2.rotation.x = Math.PI/7.8;
             scene.add(cup2);
 
-            // stairs
+            // стълбите
             var stairs = new THREE.Object3D();
             scene.add(stairs);
             var origPositionX = 66;
@@ -346,6 +353,7 @@
             stairBase.position.x = 90;
             stairs.add(stairBase);
 
+            // по-късно сещане, Че искам трети стол
             var thirdChair = chairWithThings.clone();
             thirdChair.scale.multiplyScalar(1.5);
             thirdChair.position.set(78, -32, 50);
@@ -354,12 +362,14 @@
             scene.add(thirdChair);
 
             // хора
+            // Човек, седящ на стълбите и хващаш се за главата отново и отново
             манекен = мъжествен();
             манекен.position.x = 40;
             манекен.position.y = -10;
             манекен.rotation.y = Math.PI;
             манекен.position.z = 18;
 
+            // статиЧни елементи на позата
             манекен.таз.position.x -= 3;
             манекен.д_крак.врът(0, 0, -90);
             манекен.л_крак.врът(0, 0, -90);
@@ -368,6 +378,7 @@
             манекен.л_лакът.врът(0, 0, -55);
             манекен.д_лакът.врът(0, 0, -55);
 
+            // Човек, ходещ и сядащ
             манекен2 = мъжествен();
             манекен2.position.x = 65;
             манекен2.rotation.y = 3 * Math.PI / 2;
@@ -391,6 +402,7 @@
                 манекен2.глава.врът(0,0,10*sin(5*t)-5);
             }
 
+            // движението на първия манекен
             var counter = 45, headCounter = 0;
             var headFlag = false, handsFlag = false;
             animateFirst = function()
@@ -425,7 +437,8 @@
                     counter-=3;
                 }
             }
-
+            // движението на втория манекен - ходене, сядане, облягане,
+            // клатенето на главата ознаЧава говорене
             animateSecond = function ()
             {
                 if ( манекен2.rotation.y >= 3.2 && !sitFlag) {
@@ -450,7 +463,6 @@
                                  && манекен2.position.x >= 2.8)
                             {
                                 if (t >= 35) flagLeg2 = false;
-                                console.log(манекен2.д_крак.rotation.y);
                                 манекен2.л_крак.врът(0, 0, -t);
                                 манекен2.л_коляно.врът(0, 0, t);
                                 t+=2;
